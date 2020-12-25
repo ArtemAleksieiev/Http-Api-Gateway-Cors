@@ -1,0 +1,57 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  Serverless 
+##########################################################################
+#  Parameters & Globals                                                  #
+##########################################################################
+Parameters:
+  ValidatedEmail:
+    Type: String
+    Description: (Required) A validated SES email address for receiving new submissions.
+    MaxLength: 70
+    Default: alekseev1980artem@gmail.com
+    MinLength: 4
+    ConstraintDescription: Required. Must be a SES verified email address.
+# More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
+Globals:
+  Function:
+    Timeout: 10
+Resources:
+##########################################################################
+#  Lambda functions                                                      #
+##########################################################################
+  SendEmailFunction:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      CodeUri: function/
+      Handler: index.handler
+      Runtime: nodejs12.x
+      
+      Events:
+        SendEmail:
+          Type: HttpApi # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            ApiId: !Ref BoardHttpApi
+            Method: POST
+            Path: /
+            
+      MemorySize: 128
+      Environment:
+        Variables:
+          ValidatedEmail: !Ref ValidatedEmail
+      Policies:
+        - SESCrudPolicy:
+            IdentityName: !Ref ValidatedEmail  
+  BoardHttpApi:
+    Type: AWS::Serverless::HttpApi
+    Properties:
+      CorsConfiguration: true
+
+Outputs:
+  BoardHttpApiEndpoint:
+    Description: "API endpoint"
+    Value: !Sub "https://${BoardHttpApi}.execute-api.${AWS::Region}.amazonaws.com/"
+
+
+
