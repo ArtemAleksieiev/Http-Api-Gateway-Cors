@@ -33,3 +33,11 @@ The first command will build the source of your application. The second command 
 * **Save arguments to samconfig.toml**: If set to yes, your choices will be saved to a configuration file inside the project, so that in the future you can just re-run `sam deploy` without parameters to deploy changes to your application.
 
 You can find your API endpoint and HttpApiId in the output values displayed after deployment.
+
+## Cors Configuration
+Use this command with your value for HttpApiId to set cors configurated:
+
+```bash
+aws apigatewayv2 update-api --api-id HttpApiId --cors-configuration AllowOrigins="*",AllowMethods="POST","OPTIONS",AllowHeaders="content-type"
+```
+
