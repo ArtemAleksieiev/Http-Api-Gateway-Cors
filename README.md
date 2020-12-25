@@ -12,7 +12,7 @@ Ensure you have the correct installation:
 Clone this repository:
 
 ```bash
-git clone
+git clone git@github.com:ArtemAleksieiev/Http-Api-Gateway-Cors.git
 sam deploy --guided
 ```
 
