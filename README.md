@@ -13,7 +13,7 @@ Clone this repository:
 
 ```bash
 git clone git@github.com:ArtemAleksieiev/Http-Api-Gateway-Cors.git
-sam deploy --guided
+cd Http-Api-Gateway-Cors
 ```
 
 To build and deploy your application for the first time, run the following in your shell:
