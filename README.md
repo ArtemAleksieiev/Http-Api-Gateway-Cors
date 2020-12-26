@@ -40,4 +40,7 @@ Use this command with your value for HttpApiId to set cors configurated:
 ```bash
 aws apigatewayv2 update-api --api-id HttpApiId --cors-configuration AllowOrigins="*",AllowMethods="POST","OPTIONS",AllowHeaders="content-type"
 ```
+You can check that you have your CORS settings for API configurated using AWS console. 
 
+## Front End
+Now you can use your API endpoint for making POST request from your front-end application
